@@ -25,6 +25,8 @@ do
 			;;
 		--no-sdl2) CMAKE_ARGS="-DUSE_SYSTEM_LIBSDL2=OFF ${CMAKE_ARGS}"
 			;;
+		--no-ffmpeg) CMAKE_ARGS="-DUSE_FFMPEG=OFF ${CMAKE_ARGS}"
+			;;
 		--rpi-armv6)
 			CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=cmake/Toolchains/raspberry.armv6.cmake ${CMAKE_ARGS}"
 			;;
