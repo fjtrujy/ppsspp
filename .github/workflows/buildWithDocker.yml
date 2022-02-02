@@ -14,7 +14,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apk add build-base git bash cmake glu-dev python3
+        apk add build-base git bash cmake python3 \
+          glu-dev glew-dev ffmpeg-libs ffmpeg-dev snappy-dev 
       
     - name: Checkout
       uses: actions/checkout@v2
@@ -34,7 +35,7 @@ jobs:
 
     - name: Compile project
       run: |
-        ./b.sh --headless --no-png --no-sdl2 --no-ffmpeg
+        ./b.sh --headless --no-png --no-sdl2 --system-ffmpeg
 
     # - name: Compile samples
     #   if: ${{ success() }}
