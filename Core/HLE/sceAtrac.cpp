@@ -1218,7 +1218,6 @@ u32 _AtracDecodeData(int atracID, u8 *outbuf, u32 outbufPtr, u32 *SamplesNum, u3
 				AtracDecodeResult res = ATDECODE_FEEDME;
 				while (atrac->FillPacket(-skipSamples)) {
 					uint32_t packetAddr = atrac->CurBufferAddress(-skipSamples);
-					int packetSize = atrac->packet_->size;
 					res = atrac->DecodePacket();
 					if (res == ATDECODE_FAILED) {
 						*SamplesNum = 0;
@@ -1228,6 +1227,7 @@ u32 _AtracDecodeData(int atracID, u8 *outbuf, u32 outbufPtr, u32 *SamplesNum, u3
 
 					if (res == ATDECODE_GOTFRAME) {
 #ifdef USE_FFMPEG
+						int packetSize = atrac->packet_->size;
 						// got a frame
 						int skipped = std::min(skipSamples, atrac->frame_->nb_samples);
 						skipSamples -= skipped;
