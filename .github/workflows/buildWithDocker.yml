@@ -36,6 +36,13 @@ jobs:
     - name: Compile project
       run: |
         ./b.sh --headless --no-png --no-sdl2 --system-ffmpeg
+        cd build
+        make install -j$(getconf _NPROCESSORS_ONLN)
+
+    - name: Execute PPSSPP
+      run: |
+        cd build/
+        ./PPSSPPHeadless
 
     # - name: Compile samples
     #   if: ${{ success() }}
