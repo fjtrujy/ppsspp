@@ -14,8 +14,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apk add build-base git bash cmake python3 \
-          glu-dev glew-dev ffmpeg-libs ffmpeg-dev snappy-dev 
+        apk add build-base git bash cmake python3 glu-dev
       
     - name: Checkout
       uses: actions/checkout@v2
@@ -33,16 +32,21 @@ jobs:
         make -j$(getconf _NPROCESSORS_ONLN)
         make -j$(getconf _NPROCESSORS_ONLN) install
 
+    - name: Compile FFMPEG
+      run: |
+        cd ffmpeg
+        ./linux_x86-64.sh
+
     - name: Compile project
       run: |
-        ./b.sh --headless --no-png --no-sdl2 --system-ffmpeg
+        ./b.sh --headless
         cd build
         make install -j$(getconf _NPROCESSORS_ONLN)
 
     - name: Execute PPSSPP
       run: |
         cd build/
-        ./PPSSPPHeadless
+        ./PPSSPPHeadless || true
 
     # - name: Compile samples
     #   if: ${{ success() }}
