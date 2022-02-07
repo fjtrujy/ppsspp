@@ -14,23 +14,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apk add build-base git bash cmake python3 glu-dev
+        apk update
+        apk add build-base git bash cmake python3 glu-dev sdl2-dev
       
     - name: Checkout
       uses: actions/checkout@v2
       with:
         submodules: recursive
-
-    # The SDL2 DEV package available is being compile with some flags which make CI to fail
-    - name: Compile & install SDL2
-      run: |
-        mkdir tmp && cd tmp
-        git clone https://github.com/libsdl-org/SDL.git
-        cd SDL && mkdir build && cd build
-        cmake -DCMAKE_BUILD_TYPE=Release ..
-        make -j$(getconf _NPROCESSORS_ONLN) clean
-        make -j$(getconf _NPROCESSORS_ONLN)
-        make -j$(getconf _NPROCESSORS_ONLN) install
 
     - name: Compile FFMPEG
       run: |
